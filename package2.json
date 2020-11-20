@@ -1,0 +1,15 @@
+{
+  "name": "Driveroo.postman_pipeline",
+  "version": "1.0.0",
+  "description": "Project for storing Postman tests",
+  "directories":{
+  	"test":"tests"
+  },
+  "scripts": {
+    "api-tests-production": "newman run ./tests/collection.json --reporters cli,junit --reporter-junit-export newman.xml"
+  },
+  "author": "Sergii Kokhan",
+  "dependencies": {
+    "newman": "^4.5.7"
+  }
+}

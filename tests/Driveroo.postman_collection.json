@@ -1,0 +1,2198 @@
+{
+	"info": {
+		"_postman_id": "ff5add87-8840-4955-ab1b-d0cc8c467ff7",
+		"name": "Driveroo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fleet",
+			"item": [
+				{
+					"name": "/fleets/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "407f41a9-2745-4605-8f74-26fbbd7f105f",
+								"exec": [
+									"// console.log(pm.variables.get('token_id'));  // выводит данные в консоль",
+									"",
+									"var jsonData = JSON.parse(responseBody); //сохраняет JSON Response  в переменную jsonData",
+									"//postman.setGlobalVariable(\"token_id\", jsonData.token); // присваивает значение для переменной Postman - \"token_id\"",
+									"postman.setEnvironmentVariable (\"token_id\", jsonData.token); // присваивает значение для переменной Postman",
+									"",
+									"// console.log(\"выведет только что присвоиное значение для переменной Postman - 'token_id'\")",
+									"",
+									"// console.log(pm.variables.get(\"token_id\"));",
+									"// console.log(pm.environment.get(\"token_id\"));",
+									"",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(pm.globals.get(\"token_id\"));",
+									"// получить переменную из окружения",
+									"console.log(pm.environment.get(\"token_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(pm.variables.get(\"token_id\"));",
+									"",
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Response time is less than 2400ms\", function () {",
+									"    console.log(\"Response time is \"+pm.response.responseTime);",
+									"    pm.expect(pm.response.responseTime).to.be.below(2400);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(jsonData).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('name');",
+									"    pm.expect(responseJson).to.have.property('name');",
+									"    pm.expect(responseJson.name).to.be.a('string');",
+									"    pm.expect(responseJson.email).to.have.lengthOf(23);",
+									"    pm.expect(responseJson.type).to.eql('fleet');",
+									"    pm.expect(responseJson.email).to.eql(\"linden.eskimo@gmail.com\"); ",
+									"    pm.expect(responseJson.name).to.eql('Nadezhda Moha');",
+									"    pm.expect(jsonData.email).not.eq(undefined); //To Check if Value is Null",
+									"});",
+									"",
+									"pm.test(\"To check if Value eql in the response \", () => {",
+									"    pm.expect(responseJson.type).to.eql('fleet');",
+									"    pm.expect(responseJson.email).to.eql(\"linden.eskimo@gmail.com\"); ",
+									"    pm.expect(responseJson.name).to.eql('Nadezhda Moha');",
+									"    pm.expect(jsonData.email).not.eq(undefined); //To Check if Value is Null",
+									"});",
+									"pm.test(\"Check the type of properties\", () => {",
+									"    pm.expect(responseJson.name).to.be.a('string');",
+									"});",
+									"",
+									"",
+									"/*",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(jsonData).to.be.an(\"object\");",
+									"   // pm.expect(pm.response.json()).to.have.all.keys('name','email');",
+									"    pm.expect(pm.response.json()).to.have.any.keys('name');",
+									"    pm.expect(pm.response.json()).to.have.property('name');",
+									"",
+									"    console.log(\"@@@@@@@@@@ \"+pm.response.to.be.json);",
+									"   // parse the response json and test three properties",
+									"    var responseJson = pm.response.json();",
+									"    pm.expect(responseJson.type).to.eql('fleet');",
+									"    pm.expect(responseJson.name).to.be.a('string');",
+									"",
+									"     console.log(responseJson.name);",
+									"     console.log(responseJson);",
+									"     console.log(responseJson.email);",
+									"     console.log(responseJson.name);",
+									"",
+									"    pm.expect(responseJson.email).to.have.lengthOf(23);",
+									"    pm.expect(responseJson.email).to.eql(\"linden.eskimo@gmail.com\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties #2\", function()  {",
+									"   // parse the response json and test three properties",
+									"    var responseJson1 =JSON.parse(responseBody);",
+									"    console.log(\"###-- \"+pm.environment.get(\"name\"));",
+									"  //  pm.expect(responseJson1.name).to.eql('Nadezhda Moha');",
+									"   pm.expect(responseJson1.email).to.eql(\"linden.eskimo@gmail.com\");",
+									"});  ",
+									"",
+									"pm.test(\"To Check if Value is Null\", function() {",
+									"var jsonData = pm.response.json();",
+									"pm.expect(jsonData.email).not.eq(undefined);",
+									"});",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "475e3470-1285-401a-aa08-94099505be1e",
+								"exec": [
+									"//console.log(pm.variables.get(\"token_id\")+\"  -- 1+1\");",
+									"",
+									"// получить глобальную переменную",
+									" pm.globals.get(\"token_id\");",
+									"//console.log(\"получить глобальную переменную\");",
+									"//console.log(pm.globals.get(\"token_id\"));",
+									"",
+									"// получить переменную из окружения",
+									" pm.environment.get(\"token_id\");",
+									"//console.log (\"получить переменную из окружения\");",
+									"//console.log(pm.environment.get(\"token_id\"));",
+									"",
+									"// получить переменную из любого пространства согласно приоритету",
+									" pm.variables.get(\"token_id\");",
+									"// console.log(\"из любого пространства согласно приоритету\")",
+									"// console.log(pm.variables.get(\"token_id\"));",
+									"",
+									"",
+									"",
+									"/* ****** ",
+									"",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(pm.variables.get(\"token_id\"));",
+									"// получить переменную из окружения",
+									"console.log(pm.environment.get(\"token_id\"));",
+									"// получить глобальную переменную",
+									"console.log(pm.globals.get(\"token_id\"));",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"linden.eskimo@gmail.com\",\n    \"password\": \"qwerty\",\n    \"device_token\": \"73e879b8-eac0-46df-aa32-16bddadcebff\",\n    \"device_type\": \"web\",\n    \"login_by\": \"manual\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/login",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/company/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "76419a5e-de41-4009-a53b-135bd06185bf",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Nadezhda Super Company');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://sandbox.driveroo.com/userApi/fleets/company/profile",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"company",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7fea721e-550b-4667-86c4-3d2b2c7d1433",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.globals.set(\"group_id\", responseJson.data.id);",
+									"pm.collectionVariables.set(\"group_id\", responseJson.data.id);",
+									"pm.environment.set(\"group_id\", responseJson.data.id);",
+									"",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].name).to.be.a('string');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://sandbox.driveroo.com/userApi/fleets/groups",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/serviceList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b3a731c-591d-4291-901e-916a2c4a5aa8",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.services[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.services[0]).to.have.property('id');",
+									"    pm.expect(responseJson.services[0].name).to.be.a('string');",
+									"    pm.expect(responseJson.success).to.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"latitude\": 0,\n    \"longitude\": 0,\n    \"car\": 14493\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/serviceList",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"serviceList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "serviceList - ???",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33e951fb-54ef-402b-9882-de8825fbea03",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.services[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.services[0]).to.have.property('id');",
+									"    pm.expect(responseJson.services[0].name).to.be.a('string');",
+									"    pm.expect(responseJson.success).to.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGFzcyI6InVzZXIiLCJzdWIiOjI0MTAsImlzcyI6Imh0dHBzOi8vc2FuZGJveC5kcml2ZXJvby5jb20vdXNlckFwaS9mbGVldHMvbG9naW4iLCJpYXQiOjE1OTkwNTczMjgsImV4cCI6MjU0NTE0MDkyOCwibmJmIjoxNTk5MDU3MzI4LCJqdGkiOiJvVllwb1hSRE93ekdQTWdnIn0.FiZik35Yj_gXk2xaQYqlTmTm8Y4F4Q9W3CcN9Lj6T7w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "latitude",
+									"value": " 123",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": " 123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/serviceList",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"serviceList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/company/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3039fe85-de55-4b93-98a2-b9f513b940ee",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Nadezhda Super Company');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/company/profile",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"company",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/userDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61a72c7e-5e22-4019-8697-b4f18533dded",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('name');",
+									"    pm.expect(responseJson).to.have.property('id');",
+									"    pm.expect(responseJson.name).to.be.a('string');",
+									"    pm.expect(responseJson.name).to.eql('Nadezhda Moha');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/userDetails",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"userDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24a2f340-a1e5-46f6-95ae-4a1bde423321",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('text');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].text).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].id).to.be.a('number');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/tasks",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/reports?dateFrom=..&dateTo=..",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ec7bb27-bc4a-4e2c-bc7c-4725454aece2",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('created_at');",
+									"    pm.expect(responseJson.data[0]).to.have.property('request_id');",
+									"    pm.expect(responseJson.data[0].request_id).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].service_name).to.be.a('string');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/reports?dateFrom=2020-09-01&dateTo=2020-10-31 ",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"reports"
+							],
+							"query": [
+								{
+									"key": "dateFrom",
+									"value": "2020-09-01"
+								},
+								{
+									"key": "dateTo",
+									"value": "2020-10-31 "
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/maintenance/schedulers/list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e47ab29b-b4b8-4742-bb8c-3d083a771655",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('object_id');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].id).to.be.a('number');",
+									"    pm.expect(responseJson.data[0].maintenance).to.be.a('object');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/maintenance/schedulers/list?sort=&order=asc&page=1",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"maintenance",
+								"schedulers",
+								"list"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create  /fleets/users/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc3600c0-aae9-4814-878d-582df709384f",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody); //сохраняет JSON Response  в переменную jsonData",
+									"//  console.log(jsonData.data.id);",
+									"//  console.log(pm.variables.get(\"token_id\"));",
+									"",
+									"",
+									"console.log(jsonData.data.id);",
+									"",
+									"pm.globals.set(\"user_id\", jsonData.data.id);",
+									"pm.collectionVariables.set(\"user_id\", jsonData.data.id);",
+									"pm.environment.set(\"user_id\", jsonData.data.id);",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"user_id\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"user_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"user_id\"));",
+									"",
+									"",
+									"// postman.setEnvironmentVariable (\"user_id\", jsonData.data.id); // присваивает значение для переменной Postman - \"user_id\"",
+									"// postman.setEnvironmentVariable (\"user_id\", jsonData); // присваивает значение для переменной Postman",
+									"",
+									"",
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.gender).to.be.a('string');",
+									"    pm.expect(responseJson.data.email).to.have.lengthOf(22);",
+									"    pm.expect(responseJson.data.email).to.eql(\"sergeyk+5@driveroo.com\"); ",
+									"    pm.expect(responseJson.data.name).to.eql('K S');",
+									"    pm.expect(responseJson.data.email).not.eq(undefined); //To Check if Value is Null",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": " application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"qwerty\",\n    \"email\": \"sergeyk+5@driveroo.com\",\n    \"phone\": \"7077190994\",\n    \"zip\": \"89104\",\n    \"first_name\": \"K\",\n    \"last_name\": \"S\",\n    \"confirm_password\": \"qwerty\",\n    \"role_updatable\": true,\n    \"groups\": [\n        {\n            \"group_id\": \"\",\n            \"group_name\": \"\",\n            \"role_id\": 81,\n            \"role\": \"driver\"\n        }\n    ],\n    \"login\": \"\",\n    \"timezone\": \"US/Eastern\",\n    \"language\": \"en\",\n    \"pictureLoaded\": \"\",\n    \"notification_channels\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa9350e3-45d0-4a66-ac06-472157cbef43",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"console.log(responseJson.data.id);",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].gender).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].gender).to.be.oneOf(['male','female']); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6f7fc6cf-02fe-4dcf-a384-39efda76e4a6",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"console.log(responseJson.data.id);",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.gender).to.be.a('string');",
+									"    pm.expect(responseJson.data.gender).to.be.oneOf(['male','female']); ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}/cars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6480c013-f4cd-4e08-8c56-42faa281f4ba",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"console.log(responseJson.data.id);",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.meta.pagination).to.have.any.keys('total');",
+									"    pm.expect(responseJson.meta.pagination).to.have.property('count');",
+									"    pm.expect(responseJson.meta.pagination).to.be.a('object');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}/cars",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update /users/{user_id?}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a44f1042-99a7-4a5c-863a-9b8925bf7861",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"console.log(responseJson.data.id);",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.gender).to.be.a('string');",
+									"    pm.expect(responseJson.data.gender).to.be.oneOf(['male','female']); ",
+									"    pm.expect(responseJson.data.name).to.eql('Key San');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"qwerty\",\n    \"email\": \"sergeyk+5@driveroo.com\",\n    \"phone\": \"7077190994\",\n    \"zip\": \"89104\",\n    \"first_name\": \"Key\",\n    \"last_name\": \"San\",\n    \"confirm_password\": \"qwerty\",\n    \"role_updatable\": true,\n    \"groups\": [\n        {\n            \"group_id\": \"\",\n            \"group_name\": \"\",\n            \"role_id\": 81,\n            \"role\": \"driver\"\n        }\n    ],\n    \"login\": \"\",\n    \"timezone\": \"US/Eastern\",\n    \"language\": \"en\",\n    \"pictureLoaded\": \"\",\n    \"notification_channels\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}/resetPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61bf1893-4a10-43f1-b7d1-e83a50ca3eef",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('success');",
+									"    pm.expect(responseJson).to.have.property('success');",
+									"    pm.expect(responseJson.success).to.eql(true); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"123456\",\n    \"confirm_password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}/resetPassword",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}/delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/2770/delete",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"2770",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "597f8994-3e36-48c2-9d99-ebfba053d5f3",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JS test /userApi/fleets/users/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c70c5b0-865d-4b4c-a836-d6c0ce48d878",
+								"exec": [
+									"// Get response",
+									"var jsonData = [{",
+									"    \"pregnancy\": \"1\",",
+									"    \"id\": \"1-116992830\",",
+									"    \"name\": \"British Pregnancy Advisory Service (BPAS)\",",
+									"    \"numberOfLocations\": 78",
+									"    },",
+									"    {",
+									"    \"id\": \"1-1560082724\",",
+									"    \"name\": \"PAMS Pregnancy Ultrasound Centre (PAMS 3D & 4D Baby Imaging)\",",
+									"    \"numberOfLocations\": 1",
+									"    },",
+									"    {",
+									"    \"id\": \"1-2458518720\",",
+									"    \"name\": \" Pregnancy Ultrasound Ltd (Babyface4d)\",",
+									"    \"numberOfLocations\": 1",
+									"    }];",
+									"",
+									"",
+									"var resultCount = jsonData.length;",
+									"",
+									"// Test arrays",
+									"var hasPregnancy = [];",
+									"var doesntHavePregnancy = [];",
+									"",
+									"// Loop through and set arrays with matching data",
+									"for (i = 0; i < resultCount; i++) {",
+									"  var id = jsonData[i].id;",
+									"  var modelString = jsonData[i].name.toLowerCase();",
+									"  if (modelString.includes(\"pregnancy\")) {",
+									"    hasPregnancy.push({",
+									"      \"id\": id,",
+									"      \"hasPregnancy\": modelString.has(\"pregnancy\")",
+									"    });",
+									"  } else {",
+									"    doesntHavePregnancy.push({",
+									"      \"id\": id",
+									"    });",
+									"  }",
+									"}",
+									"",
+									"// Check that each object in response contained keyword and length matches from test",
+									"pm.test(\"Expect response to contain pregnancy in each object\", function() {",
+									"  console.log(hasPregnancy);",
+									"  console.log(doesntHavePregnancy);",
+									"  pm.expect(hasPregnancy.length).to.equal(resultCount);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3213c475-a3a7-4eed-bdbe-67dab9470b7e",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.globals.set(\"role_id\", responseJson.data.id);",
+									"pm.collectionVariables.set(\"role_id\", responseJson.data.id);",
+									"pm.environment.set(\"role_id\", responseJson.data.id);",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"role_id\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"role_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"role_id\"));",
+									"",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test1');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test1\",\"abilities\":[1,2,5,9,17,26,31,34,36,41,56]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "767de931-c367-4328-a27e-5497a6784020",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].name).to.be.a('string');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles/{role_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "757bd0a3-f736-4a67-9808-489d3f3eee14",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test1');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/{{role_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets /roles/{role_id?}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c2e256a9-5755-457f-a9f1-5b08d2d8a448",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test2');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test2\",\"abilities\":[1,2,5,9,17,26,31,34,36,41,56]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/{{role_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								"{{role_id}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles/{role_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c7f6a8a-33aa-47d8-a868-90678c0ffe2a",
+								"exec": [
+									"",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/{{role_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1eb169b0-840c-4e69-b6ac-7eacb1968a68",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.globals.set(\"group_id\", responseJson.data.id);",
+									"pm.collectionVariables.set(\"group_id\", responseJson.data.id);",
+									"pm.environment.set(\"group_id\", responseJson.data.id);",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"group_id\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"group_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"group_id\"));",
+									"",
+									"",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test\",\"timezone\":\"Pacific/Honolulu\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c94776a-a313-4381-8c40-e50e683245c2",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].name).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].id).to.be.a('number');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0fcb80b-a5cc-4058-818a-efb1e85903ba",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{{group_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id?}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2118bddf-eda0-45d8-ae0c-6b86c1e1010f",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test1');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test1\",\"timezone\":\"Pacific/Honolulu\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{{group_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{{group_id}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e073c63-0d40-4efe-bf26-4cd48fd23f97",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{{group_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/cars/attach",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/cars/attach",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"cars",
+								"attach"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/cars",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/cars",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/cars",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/cars",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/users",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/users",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/users",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Select WO /fleets/work-order/{{uuid}}",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "46907f25-c5d8-416c-9717-67d756f64d7d",
+								"exec": [
+									"// postman.setEnvironmentVariable (\"uuid\", \"1c846d60-f356-11ea-bc53-71d549b77651?uuid\");",
+									"// postman.setG (\"uuid\", \"1c846d60-f356-11ea-bc53-71d549b77651?uuid\");",
+									"",
+									"pm.globals.set(\"uuid\", \"0d440c50-f82c-11ea-9ba9-79990f4e24d7\");",
+									"pm.collectionVariables.set(\"uuid\", \"0d440c50-f82c-11ea-9ba9-79990f4e24d7\");",
+									"pm.environment.set(\"uuid\", \"0d440c50-f82c-11ea-9ba9-79990f4e24d7\");",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"uuid\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"uuid\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"uuid\"));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/work-order/{{uuid}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"work-order",
+								"{{uuid}}"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "1c846d60-f356-11ea-bc53-71d549b77651?uuid",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/work-order/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/work-order/633",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"work-order",
+								"633"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/stats?group=  ???",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/stats?group=",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"stats"
+							],
+							"query": [
+								{
+									"key": "group",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_id}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cc11ca7a-8b43-46ab-8c23-3fa7697403d3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "729287fa-3f49-4aa0-ab13-7475b71bb825",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Provider",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_token",
+									"value": " DPaBZ6KwIWGseEunaPN51NWp9IYxvShG4I3986TI",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": " dmitriyb%40driveroo.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": " 123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{sand}}/provider/login",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"provider",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Admin dashboard",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_token",
+									"value": " R94Regq11MJfYtG7eB8OwEgsSpM8J6CCS20K3Xmd",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": " sergeyk@driveroo.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": " 123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{sand}}/admin/login",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token_id}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7d5dcab4-8f12-4a6e-b4d6-58c3bc845d8d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2bdb5132-60f2-4b55-9024-3b885b13099f",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "8ecd6550-5399-45e3-ac6a-208cf9423670",
+			"key": "token_id",
+			"value": ""
+		},
+		{
+			"id": "823b9c1a-149c-484f-9237-95759ab60ace",
+			"key": "user_id",
+			"value": 2837
+		},
+		{
+			"id": "9ba0bb88-671f-4b0f-be83-595e8c3f864f",
+			"key": "group_id",
+			"value": 228
+		},
+		{
+			"id": "10a88f3f-d005-48f7-a7cb-06a8556d72f1",
+			"key": "role_id",
+			"value": 238
+		},
+		{
+			"id": "88ffa260-6c91-45e5-9e83-9fdf38121d7f",
+			"key": "uuid",
+			"value": "0d440c50-f82c-11ea-9ba9-79990f4e24d7"
+		},
+		{
+			"id": "f1e3d86a-a819-4358-a86a-ea4683bb5e05",
+			"key": "sand",
+			"value": "https://sandbox.driveroo.com"
+		},
+		{
+			"id": "96fec967-e1e2-48e9-84db-0f90e67e123a",
+			"key": "prod",
+			"value": "https://www.driveroo.com"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

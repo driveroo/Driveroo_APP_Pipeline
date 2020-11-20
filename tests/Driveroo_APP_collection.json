@@ -1,0 +1,1076 @@
+{
+	"info": {
+		"_postman_id": "be656372-b2ae-47a2-968b-89fa2da34d30",
+		"name": "Driveroo_APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "inspector_APP",
+			"item": [
+				{
+					"name": "/providerApi/inspect/self",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2682957d-8859-451f-b2a0-0e4058c27e90",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									" console.log(responseJson.request_id);",
+									"pm.globals.set(\"request_id_provider\", responseJson.request_id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    pm.expect(responseJson.type).to.be.a(\"string\");",
+									"    pm.expect(responseJson.request_id).to.be.a(\"number\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id_Prov}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "car_model_id",
+									"value": "57930",
+									"type": "text"
+								},
+								{
+									"key": "make",
+									"value": "Dodge",
+									"type": "text"
+								},
+								{
+									"key": "service_type",
+									"value": "36",
+									"type": "text"
+								},
+								{
+									"key": "vin",
+									"value": "1C3CDFBA5DD344386",
+									"type": "text"
+								},
+								{
+									"key": "xlatitude",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "xlongitude",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "2013",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://sandbox.driveroo.com/providerApi/inspect/self",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"providerApi",
+								"inspect",
+								"self"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/providerApi/inspect",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "47a3b2aa-7b1a-467c-84a3-b55a9a3d59aa",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c171f1f-2efe-4240-88ee-5b1f76a2e28a",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    pm.expect(responseJson.type).to.be.a(\"string\");",
+									"    pm.expect(responseJson.request_id).to.be.a(\"string\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id_Prov}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "aatg_mode",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "answers[default_1]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "car_model_id",
+									"value": "Other",
+									"type": "text"
+								},
+								{
+									"key": "hours",
+									"value": "0.0",
+									"type": "text"
+								},
+								{
+									"key": "mileage",
+									"value": "145582",
+									"type": "text"
+								},
+								{
+									"key": "previous_answers",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "request_id",
+									"value": "{{request_id_provider}}",
+									"type": "text"
+								},
+								{
+									"key": "transmission",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "vin",
+									"value": "1HGCV3F49KA009255",
+									"type": "text"
+								},
+								{
+									"key": "xlatitude",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "xlongitude",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://sandbox.driveroo.com/providerApi/inspect",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"providerApi",
+								"inspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/providerApi/inspect/report",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a4753a6a-d1e4-45db-ad36-58e2549fd2de",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    pm.expect(responseJson.success).to.be.equal(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id_Prov}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "answers[0YpkMsir][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[0YpkMsir][value]",
+									"value": "No",
+									"type": "text"
+								},
+								{
+									"key": "answers[0dVA6Sp1][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[0dVA6Sp1][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[2ilasOnl][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[2ilasOnl][picture]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[2ilasOnl][value]",
+									"value": "110/22 R19.5",
+									"type": "text"
+								},
+								{
+									"key": "answers[66cSeaXt][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[66cSeaXt][picture]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[66cSeaXt][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[6m2VYrZs][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[6m2VYrZs][picture]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[6m2VYrZs][value]",
+									"value": "(884) 889-55-99",
+									"type": "text"
+								},
+								{
+									"key": "answers[7FGQTsN1][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[7FGQTsN1][value]",
+									"value": "4mm-7mm",
+									"type": "text"
+								},
+								{
+									"key": "answers[7V8kQ9Bn][comment]",
+									"value": "CBC",
+									"type": "text"
+								},
+								{
+									"key": "answers[7V8kQ9Bn][value]",
+									"value": "Interior is Clean",
+									"type": "text"
+								},
+								{
+									"key": "answers[E5bMQLr6][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[E5bMQLr6][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[KnAlFVzo][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[KnAlFVzo][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[M6GhgGoU][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[M6GhgGoU][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[MNAeKNtQ][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[MNAeKNtQ][picture]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[MNAeKNtQ][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[QUz2aJYF][comment]",
+									"value": "C CD.",
+									"type": "text"
+								},
+								{
+									"key": "answers[QUz2aJYF][picture]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[QUz2aJYF][value]",
+									"value": "n/r text answer",
+									"type": "text"
+								},
+								{
+									"key": "answers[Th5xy035][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[Th5xy035][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[TstGDQYY][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[TstGDQYY][value]",
+									"value": "231203",
+									"type": "text"
+								},
+								{
+									"key": "answers[VvmHho8E][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[VvmHho8E][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[W68HyCia][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[W68HyCia][value]",
+									"value": "Yes",
+									"type": "text"
+								},
+								{
+									"key": "answers[YSIbppAm][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[YSIbppAm][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[Yseb9jgW][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[Yseb9jgW][value]",
+									"value": "Checked and OK",
+									"type": "text"
+								},
+								{
+									"key": "answers[dXLgMXBs][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[dXLgMXBs][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[nQn0MPhk][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[nQn0MPhk][value]",
+									"value": "Issue 1",
+									"type": "text"
+								},
+								{
+									"key": "answers[pqOqU2az][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[pqOqU2az][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[qFn0SLnb][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[qFn0SLnb][picture]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[qFn0SLnb][value]",
+									"value": "default value",
+									"type": "text"
+								},
+								{
+									"key": "answers[qZcOEL5t][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[qZcOEL5t][value]",
+									"value": "user option 2",
+									"type": "text"
+								},
+								{
+									"key": "answers[qhmCmO50][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[qhmCmO50][value]",
+									"value": "No issues observed",
+									"type": "text"
+								},
+								{
+									"key": "answers[tAsQwjrh][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[tAsQwjrh][value]",
+									"value": "Exterior is Clean",
+									"type": "text"
+								},
+								{
+									"key": "answers[wg1UmRlZ][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[wg1UmRlZ][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[wwIp6LVh][comment]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[wwIp6LVh][picture]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[wwIp6LVh][value]",
+									"value": "8888",
+									"type": "text"
+								},
+								{
+									"key": "is_issues",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "request_id",
+									"value": "{{request_id_provider}}",
+									"type": "text"
+								},
+								{
+									"key": "uuid",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "xlatitude",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "xlongitude",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://sandbox.driveroo.com/providerApi/inspect/report",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"providerApi",
+								"inspect",
+								"report"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "fleet_APP",
+			"item": [
+				{
+					"name": "/userApi/inspect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ed560f8-2906-4e21-8e3b-a4b3dd4ef043",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									" console.log(responseJson.request_id);",
+									"pm.globals.set(\"request_id_fleet\", responseJson.request_id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    pm.expect(responseJson.type).to.be.a(\"string\");",
+									"    pm.expect(responseJson.request_id).to.be.a(\"number\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "latitude",
+									"value": "46.4539332",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": "30.7433664",
+									"type": "text"
+								},
+								{
+									"key": "car",
+									"value": "14966",
+									"type": "text"
+								},
+								{
+									"key": "service_type",
+									"value": "108",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://sandbox.driveroo.com/userApi/inspect",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"userApi",
+								"inspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/userApi/inspect/start",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c4e2ae6-38bf-4be7-84e7-328caeaa2a3a",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    pm.expect(responseJson.type).to.be.a(\"string\");",
+									"    pm.expect(responseJson.request_id).to.be.a(\"string\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "answers[default_1]",
+									"value": "testplat",
+									"type": "text"
+								},
+								{
+									"key": "aatg_mode",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "car_model_id",
+									"value": "Other",
+									"type": "text"
+								},
+								{
+									"key": "hours",
+									"value": "0.0",
+									"type": "text"
+								},
+								{
+									"key": "previous_answers",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "mileage",
+									"value": "4177",
+									"type": "text"
+								},
+								{
+									"key": "request_id",
+									"value": "{{request_id_fleet}}",
+									"type": "text"
+								},
+								{
+									"key": "transmission",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "vin",
+									"value": "1FTYE1CM0HKA39809",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "xlatitude",
+									"value": "0.0",
+									"type": "text"
+								},
+								{
+									"key": "xlongitude",
+									"value": "0.0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://sandbox.driveroo.com/userApi/inspect/start",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"userApi",
+								"inspect",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/userApi/inspect/issues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94548b40-29a0-4f50-bf51-94f50b51a2bc",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    pm.expect(responseJson.success).to.be.equal(true);",
+									"    pm.expect(responseJson.request_id).to.be.a('string');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "answers[KnAlFVzo][value]",
+									"value": "No issues found at this time",
+									"type": "text"
+								},
+								{
+									"key": "answers[YSIbppAm][value]",
+									"value": "Positive value",
+									"type": "text"
+								},
+								{
+									"key": "answers[Yseb9jgW][value]",
+									"value": "Issue 2",
+									"type": "text"
+								},
+								{
+									"key": "answers[QUz2aJYF][value]",
+									"value": "May the n/r t be with xt",
+									"type": "text"
+								},
+								{
+									"key": "answers[nQn0MPhk][comment]",
+									"value": "Test 2020",
+									"type": "text"
+								},
+								{
+									"key": "answers[nQn0MPhk][value]",
+									"value": "Issue 2",
+									"type": "text"
+								},
+								{
+									"key": "answers[VvmHho8E][value]",
+									"value": "No issues found at this time",
+									"type": "text"
+								},
+								{
+									"key": "answers[66cSeaXt][value]",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "answers[7FGQTsN1][value]",
+									"value": "0mm-3mm",
+									"type": "text"
+								},
+								{
+									"key": "answers[0dVA6Sp1][value]",
+									"value": "Issue 1,Issue 2",
+									"type": "text"
+								},
+								{
+									"key": "answers[wg1UmRlZ][value]",
+									"value": "No issues found at this time",
+									"type": "text"
+								},
+								{
+									"key": "answers[E5bMQLr6][value]",
+									"value": "8mm +",
+									"type": "text"
+								},
+								{
+									"key": "answers[TstGDQYY][value]",
+									"value": "231333",
+									"type": "text"
+								},
+								{
+									"key": "answers[wwIp6LVh][value]",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "answers[W68HyCia][value]",
+									"value": "No",
+									"type": "text"
+								},
+								{
+									"key": "answers[pqOqU2az][value]",
+									"value": "No issues found at this time",
+									"type": "text"
+								},
+								{
+									"key": "answers[2ilasOnl][value]",
+									"value": "110/22 R19.5",
+									"type": "text"
+								},
+								{
+									"key": "answers[qFn0SLnb][value]",
+									"value": "default value",
+									"type": "text"
+								},
+								{
+									"key": "answers[7V8kQ9Bn][value]",
+									"value": "Interior is not Clean",
+									"type": "text"
+								},
+								{
+									"key": "answers[6m2VYrZs][value]",
+									"value": "(111) ***-**-**",
+									"type": "text"
+								},
+								{
+									"key": "answers[tAsQwjrh][comment]",
+									"value": "Test 2020",
+									"type": "text"
+								},
+								{
+									"key": "answers[tAsQwjrh][value]",
+									"value": "Exterior is not Clean",
+									"type": "text"
+								},
+								{
+									"key": "answers[qhmCmO50][comment]",
+									"value": "Test 2020",
+									"type": "text"
+								},
+								{
+									"key": "answers[qhmCmO50][value]",
+									"value": "Issue 2",
+									"type": "text"
+								},
+								{
+									"key": "answers[MNAeKNtQ][value]",
+									"value": "Inspected",
+									"type": "text"
+								},
+								{
+									"key": "answers[dXLgMXBs][pictures][0]",
+									"value": "231331",
+									"type": "text"
+								},
+								{
+									"key": "answers[dXLgMXBs][pictures][1]",
+									"value": "231332",
+									"type": "text"
+								},
+								{
+									"key": "answers[dXLgMXBs][attachment_urls][0]",
+									"value": "https://s3-us-west-2.amazonaws.com/driveroo.sandbox/231331/1605881052741.jpg",
+									"type": "text"
+								},
+								{
+									"key": "answers[dXLgMXBs][attachment_urls][1]",
+									"value": "https://s3-us-west-2.amazonaws.com/driveroo.sandbox/231332/1605881074269.jpg",
+									"type": "text"
+								},
+								{
+									"key": "answers[dXLgMXBs][value]",
+									"value": "Left front door handle is broken or missing",
+									"type": "text"
+								},
+								{
+									"key": "answers[Th5xy035][value]",
+									"value": "No issues found at this time",
+									"type": "text"
+								},
+								{
+									"key": "answers[0YpkMsir][pictures][0]",
+									"value": "231334",
+									"type": "text"
+								},
+								{
+									"key": "answers[0YpkMsir][attachment_urls][0]",
+									"value": "https://s3-us-west-2.amazonaws.com/driveroo.sandbox/231334/1605881252365.jpg",
+									"type": "text"
+								},
+								{
+									"key": "answers[0YpkMsir][value]",
+									"value": "Yes",
+									"type": "text"
+								},
+								{
+									"key": "answers[qZcOEL5t][value]",
+									"value": "user option 3",
+									"type": "text"
+								},
+								{
+									"key": "is_issues",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "request_id",
+									"value": "{{request_id_fleet}}",
+									"type": "text"
+								},
+								{
+									"key": "xlatitude",
+									"value": "0.0",
+									"type": "text"
+								},
+								{
+									"key": "xlongitude",
+									"value": "0.0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://sandbox.driveroo.com/userApi/inspect/issues",
+							"protocol": "https",
+							"host": [
+								"sandbox",
+								"driveroo",
+								"com"
+							],
+							"path": [
+								"userApi",
+								"inspect",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

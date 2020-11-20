@@ -1,0 +1,3928 @@
+{
+	"info": {
+		"_postman_id": "9521b6ca-8bed-4f45-80c3-5268882f38e8",
+		"name": "Driveroo_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Driveroo_Test_Env",
+			"item": [
+				{
+					"name": "Fleet",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "/admin/login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "02027b1d-2d15-4039-b0ef-1c40f63f768e",
+										"exec": [
+											"// console.log( pm.cookies.get(\"laravel_session\"));",
+											"//let cookies = \"laravel_session=\"+ pm.cookies.get(\"laravel_session\");",
+											"",
+											"//console.log(cookies);",
+											"",
+											"pm.globals.set(\"cookies-token\", \"laravel_session=\"+ pm.cookies.get(\"laravel_session\"));",
+											"pm.collectionVariables.set(\"cookies-token\", \"laravel_session=\"+ pm.cookies.get(\"laravel_session\"));",
+											"pm.environment.set(\"cookies-token\", \"laravel_session=\"+ pm.cookies.get(\"laravel_session\"));",
+											"",
+											"//console.log(pm.globals.get(\"cookies-token\") +\" | \"+pm.collectionVariables.get(\"cookies-token\")+\" | \"+pm.environment.get(\"cookies-token\"));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "_token",
+											"value": "tWT9T8O3n1VV5KN6Lq4jnRuPt5R2p6RkyuQLPtIP",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "nadezhda@driveroo.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "qwerty",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sand}}/admin/login",
+									"host": [
+										"{{sand}}"
+									],
+									"path": [
+										"admin",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/admin/clockwork?sort=time&order=desc&id=&user=Freddie+Mercury&time=&url=&ip=&status=&method=&duration=",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b8415849-781a-41cd-b081-0046a8a28c1b",
+										"exec": [
+											"var jsonRes = htmlTableToJson(responseBody);",
+											"//console.log(jsonRes);",
+											"",
+											"function htmlTableToJson(data) {",
+											"    const $ = cheerio.load(data, { normalizeWhitespace: true });",
+											"    var table = $(\"#clockwork\").html();",
+											"    var result = [];",
+											"    var headers = [];",
+											"",
+											"    $(\"thead\", table).find(\"th\").each(function(i,el) {",
+											"        headers[i] = $(el).text().trim();",
+											"    });",
+											"    //console.log(headers);",
+											"",
+											"    $(\"tbody\", table).find(\"tr\").each(function(i,el) {",
+											"        var node = {};",
+											"        $(\"td\", el).each(function(j,el) {",
+											"            if(j < 10)",
+											"                node[headers[j]] = $(el).text().trim();    ",
+											"            else     ",
+											"                node[headers[j]] = $(el).find(\"a\").attr(\"href\");",
+											"        });",
+											"        result[i] = node;",
+											"    });",
+											"",
+											"    return JSON.stringify(result);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Cookie",
+										"type": "text",
+										"value": "{{cookies-token}}"
+									}
+								],
+								"url": {
+									"raw": "{{sand}}/admin/clockwork?sort=time&order=desc&id=&user=Freddie+Mercury&time=&url=&ip=&status=&method=&duration=",
+									"host": [
+										"{{sand}}"
+									],
+									"path": [
+										"admin",
+										"clockwork"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "time"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "id",
+											"value": ""
+										},
+										{
+											"key": "user",
+											"value": "Freddie+Mercury"
+										},
+										{
+											"key": "time",
+											"value": ""
+										},
+										{
+											"key": "url",
+											"value": ""
+										},
+										{
+											"key": "ip",
+											"value": ""
+										},
+										{
+											"key": "status",
+											"value": ""
+										},
+										{
+											"key": "method",
+											"value": ""
+										},
+										{
+											"key": "duration",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/clockwork/{{API_keys}}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "378e12d6-9712-4ee6-8a45-4738b67ab8c7",
+										"exec": [
+											"let responseJson = pm.response.json();",
+											"",
+											"pm.globals.set(\"clockwork_id\", responseJson.data[0].id);",
+											"pm.collectionVariables.set(\"clockwork_id\", responseJson.data[0].id);",
+											"pm.environment.set(\"requclockwork_idestID\", responseJson.data[0].id);",
+											"",
+											"",
+											"console.log(pm.globals.get(\"clockwork_id\") +\"  \"+pm.collectionVariables.get(\"clockwork_id\")+\"  \"+pm.environment.get(\"requclockwork_idestID\"));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sand}}/api/clockwork/{{API_keys}}?page=13&sort=duration&order=desc&per_page=100",
+									"host": [
+										"{{sand}}"
+									],
+									"path": [
+										"api",
+										"clockwork",
+										"{{API_keys}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "13"
+										},
+										{
+											"key": "sort",
+											"value": "duration"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										},
+										{
+											"key": "per_page",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/clockwork/{{API_keys}}/{clockwork_id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sand}}/api/clockwork/{{API_keys}}/{{clockwork_id}}",
+									"host": [
+										"{{sand}}"
+									],
+									"path": [
+										"api",
+										"clockwork",
+										"{{API_keys}}",
+										"{{clockwork_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/fleets/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d887ca6-750c-4e03-9ab7-60e672cf3f03",
+								"exec": [
+									"",
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.globals.set(\"token_id\", responseJson.token);",
+									"pm.collectionVariables.set(\"token_id\", responseJson.token);",
+									"pm.environment.set(\"token_id\", responseJson.token);",
+									"",
+									"/*",
+									"// получить глобальную переменную",
+									"console.log(pm.globals.get(\"token_id\"));",
+									"// получить переменную из окружения",
+									"console.log(pm.environment.get(\"token_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(pm.variables.get(\"token_id\"));",
+									"*/",
+									"",
+									"",
+									"pm.test(\"Response time is less than 2400ms\", function () {",
+									"    console.log(\"Response time is \"+pm.response.responseTime);",
+									"    pm.expect(pm.response.responseTime).to.be.below(2400);",
+									"});",
+									"",
+									"pm.test(\"Create new user\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('name');",
+									"    pm.expect(responseJson).to.have.property('name');",
+									"    pm.expect(responseJson.name).to.be.a('string');",
+									"    pm.expect(responseJson.email).to.have.lengthOf(24);",
+									"    pm.expect(responseJson.type).to.eql('fleet');",
+									"    pm.expect(responseJson.email).to.eql(\"sergeyk+000@driveroo.com\"); ",
+									"    pm.expect(responseJson.name).to.eql('Chuck Norris');",
+									"    pm.expect(responseJson.email).not.eq(undefined); //To Check if Value is Null",
+									"});",
+									"",
+									"pm.test(\"To check if Value eql in the response \", () => {",
+									"    pm.expect(responseJson.type).to.eql('fleet');",
+									"    pm.expect(responseJson.email).to.eql(\"sergeyk+000@driveroo.com\"); ",
+									"    pm.expect(responseJson.name).to.eql('Chuck Norris');",
+									"    pm.expect(responseJson.email).not.eq(undefined); //To Check if Value is Null",
+									"});",
+									"pm.test(\"Check the type of properties\", () => {",
+									"    pm.expect(responseJson.name).to.be.a('string');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0524dd30-5230-4e0b-8268-f1d66ccc58eb",
+								"exec": [
+									"//console.log(pm.variables.get(\"token_id\")+\"  -- 1+1\");",
+									"",
+									"// получить глобальную переменную",
+									" pm.globals.get(\"token_id\");",
+									"//console.log(\"получить глобальную переменную\");",
+									"//console.log(pm.globals.get(\"token_id\"));",
+									"",
+									"// получить переменную из окружения",
+									" pm.environment.get(\"token_id\");",
+									"//console.log (\"получить переменную из окружения\");",
+									"//console.log(pm.environment.get(\"token_id\"));",
+									"",
+									"// получить переменную из любого пространства согласно приоритету",
+									" pm.variables.get(\"token_id\");",
+									"// console.log(\"из любого пространства согласно приоритету\")",
+									"// console.log(pm.variables.get(\"token_id\"));",
+									"",
+									"",
+									"",
+									"/* ****** ",
+									"",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(pm.variables.get(\"token_id\"));",
+									"// получить переменную из окружения",
+									"console.log(pm.environment.get(\"token_id\"));",
+									"// получить глобальную переменную",
+									"console.log(pm.globals.get(\"token_id\"));",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"sergeyk+000@driveroo.com\",\n    \"password\": \"123456\",\n    \"device_token\": \"73e879b8-eac0-46df-aa32-16bddadcebff\",\n    \"device_type\": \"web\",\n    \"login_by\": \"manual\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/login",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91fc5aef-02bd-4b88-ba2b-5999465e77ab",
+								"exec": [
+									"// var responseJson = pm.response.json();",
+									"",
+									"// pm.globals.set(\"group_id\", responseJson.data.id);",
+									"// pm.collectionVariables.set(\"group_id\", responseJson.data.id);",
+									"// pm.environment.set(\"group_id\", responseJson.data.id);",
+									"",
+									"",
+									"// pm.test(\"Resive ompany profile inform\", function () {",
+									"// });",
+									"",
+									"// pm.test(\"Status code is 200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });",
+									"",
+									"// pm.test(\"The response is JSON and type 'object'\", () => {",
+									"//     pm.response.to.be.json;",
+									"//     pm.expect(responseJson).to.be.an(\"object\");",
+									"// });",
+									"",
+									"// pm.test(\"The response has all properties\", () => {",
+									"//     pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"//     pm.expect(responseJson.data[0]).to.have.property('id');",
+									"//     pm.expect(responseJson.data[0].name).to.be.a('string');",
+									"// });",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/serviceList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7397540-d6f4-48c6-9936-9ba71c5adc81",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Recive service list\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.services[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.services[0]).to.have.property('id');",
+									"    pm.expect(responseJson.services[0].name).to.be.a('string');",
+									"    pm.expect(responseJson.success).to.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "latitude",
+									"value": " 0",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": " 0",
+									"type": "text"
+								},
+								{
+									"key": "car",
+									"value": " 14493",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/serviceList",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"serviceList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "serviceList - ???",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36665e92-66c1-4ffd-80a6-b714563a85fb",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Recive service list\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.services[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.services[0]).to.have.property('id');",
+									"    pm.expect(responseJson.services[0].name).to.be.a('string');",
+									"    pm.expect(responseJson.success).to.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGFzcyI6InVzZXIiLCJzdWIiOjI0MTAsImlzcyI6Imh0dHBzOi8vc2FuZGJveC5kcml2ZXJvby5jb20vdXNlckFwaS9mbGVldHMvbG9naW4iLCJpYXQiOjE1OTkwNTczMjgsImV4cCI6MjU0NTE0MDkyOCwibmJmIjoxNTk5MDU3MzI4LCJqdGkiOiJvVllwb1hSRE93ekdQTWdnIn0.FiZik35Yj_gXk2xaQYqlTmTm8Y4F4Q9W3CcN9Lj6T7w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "latitude",
+									"value": " 123",
+									"type": "text"
+								},
+								{
+									"key": "longitude",
+									"value": " 123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/serviceList",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"serviceList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/currencies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bb20988d-a144-4bdc-b0a7-e590d7942fac",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive list of currencies\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('currency');",
+									"    pm.expect(responseJson.data[0]).to.have.property('name');",
+									"    pm.expect(responseJson.data[0].symbol).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].is_symbol_first).to.be.a('boolean');",
+									"    pm.expect(responseJson.data[0].currency).to.equal(\"AED\");",
+									"    pm.expect(responseJson.data[0].name).to.equal(\"UAE Dirham\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/currencies",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/company/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "be83cc73-86f8-4ed4-bb98-0ad67589aec6",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Update currencies of company \", function () {",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Driveroo_Test_Env');",
+									"    pm.expect(responseJson.data.currency.currency).to.eql('UAH');",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"value": " ",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": " ",
+									"type": "text"
+								},
+								{
+									"key": "terminal_address",
+									"value": " ",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Driveroo_Test_Env",
+									"type": "text"
+								},
+								{
+									"key": "timezone",
+									"value": "America/Los_Angeles",
+									"type": "text"
+								},
+								{
+									"key": "currency",
+									"value": "UAH",
+									"type": "text"
+								},
+								{
+									"key": "ttl_type",
+									"value": " default",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/company/profile",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"company",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/company/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61c4eea6-1e50-4a9f-8741-be73e38eb82b",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive company profile inform\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Driveroo_Test_Env');",
+									"    pm.expect(responseJson.data.currency.currency).to.eql('UAH');",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/company/profile",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"company",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/userApi/fleets/company/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "feb15990-d793-43c3-9618-841cecd412e4",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Return defolt setings of company \", function () {",
+									"});",
+									"",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Driveroo_Test_Env');",
+									"    pm.expect(responseJson.data.currency.currency).to.eql('USD');",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"value": " ",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": " ",
+									"type": "text"
+								},
+								{
+									"key": "terminal_address",
+									"value": " ",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Driveroo_Test_Env",
+									"type": "text"
+								},
+								{
+									"key": "timezone",
+									"value": "America/Los_Angeles",
+									"type": "text"
+								},
+								{
+									"key": "currency",
+									"value": "USD",
+									"type": "text"
+								},
+								{
+									"key": "ttl_type",
+									"value": "default",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/company/profile",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"company",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/userDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e0d479d-28ee-4c84-9a9c-7ba1b80a8b9b",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Inform about fleet owner\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('name');",
+									"    pm.expect(responseJson).to.have.property('id');",
+									"    pm.expect(responseJson.name).to.be.a('string');",
+									"    pm.expect(responseJson.name).to.eql('Chuck Norris');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/userDetails",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"userDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14cf0ca4-232f-47d6-8736-c5fb0512de48",
+								"exec": [
+									"// var responseJson = pm.response.json();",
+									"",
+									"// pm.test(\"Status code is 200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });",
+									"",
+									"// pm.test(\"The response is JSON and type 'object'\", () => {",
+									"//     pm.response.to.be.json;",
+									"//     pm.expect(responseJson).to.be.an(\"object\");",
+									"// });",
+									"",
+									"// pm.test(\"The response has all properties\", () => {",
+									"//     pm.expect(responseJson.data[0]).to.have.any.keys('text');",
+									"//     pm.expect(responseJson.data[0]).to.have.property('id');",
+									"//     pm.expect(responseJson.data[0].text).to.be.a('string');",
+									"//     pm.expect(responseJson.data[0].id).to.be.a('number');",
+									"// });",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/tasks",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/reports?dateFrom=..&dateTo=..",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "83485bc0-75e0-4702-9fde-7dcf89234fcd",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"List of reports\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"     pm.expect(responseJson.data).to.be.an('array');",
+									"    // pm.expect(responseJson.data[0]).to.have.any.keys('created_at');",
+									"    // pm.expect(responseJson.data[0]).to.have.property('request_id');",
+									"    // pm.expect(responseJson.data[0].request_id).to.be.a('string');",
+									"    // pm.expect(responseJson.data[0].service_name).to.be.a('string');",
+									"    pm.expect(responseJson.meta.pagination.total).to.be.a('number');",
+									"    pm.expect(responseJson.meta.pagination.current_page).to.be.a('number');",
+									"    pm.expect(responseJson.meta.pagination.links).to.be.an('array');",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/reports?dateFrom=2020-09-01&dateTo=2020-10-31 ",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"reports"
+							],
+							"query": [
+								{
+									"key": "dateFrom",
+									"value": "2020-09-01"
+								},
+								{
+									"key": "dateTo",
+									"value": "2020-10-31 "
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/maintenance/schedulers/list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "92215e65-82c3-492e-ad3e-e998ebb47ed6",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"list of maintenance schedulers\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.be.an('array');",
+									"    // pm.expect(responseJson.data[0]).to.have.any.keys('created_at');",
+									"    // pm.expect(responseJson.data[0]).to.have.property('request_id');",
+									"    // pm.expect(responseJson.data[0].request_id).to.be.a('string');",
+									"    // pm.expect(responseJson.data[0].service_name).to.be.a('string');",
+									"    pm.expect(responseJson.meta.pagination.total).to.be.a('number');",
+									"    pm.expect(responseJson.meta.pagination.current_page).to.be.a('number');",
+									"    pm.expect(responseJson.success).to.equal(true);",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/maintenance/schedulers/list?sort=&order=asc&page=1",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"maintenance",
+								"schedulers",
+								"list"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create  /fleets/users/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e977d31-5f3e-4aa6-b25c-31ff0156faa0",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Create flet user\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.globals.set(\"user_id\", responseJson.data.id);",
+									"pm.collectionVariables.set(\"user_id\", responseJson.data.id);",
+									"pm.environment.set(\"user_id\", responseJson.data.id);",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"user_id\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"user_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"user_id\"));",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.gender).to.be.a('string');",
+									"    pm.expect(responseJson.data.email).to.have.lengthOf(24);",
+									"    pm.expect(responseJson.data.email).to.eql(\"sergeyk+004@driveroo.com\"); ",
+									"    pm.expect(responseJson.data.name).to.eql('Ozzy Osbourne');",
+									"    pm.expect(responseJson.data.email).not.eq(undefined); //To Check if Value is Null",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": " application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"qwerty\",\n    \"email\": \"sergeyk+004@driveroo.com\",\n    \"phone\": \"7077190997\",\n    \"zip\": \"89104\",\n    \"first_name\": \"Ozzy\",\n    \"last_name\": \"Osbourne\",\n    \"confirm_password\": \"qwerty\",\n    \"role_updatable\": true,\n    \"groups\": [\n        {\n            \"group_id\": 241,\n            \"group_name\": \"Team #2\",\n            \"role_id\": 248,\n            \"role\": \"driver\"\n        }\n    ],\n    \"login\": \"1111\",\n    \"timezone\": \"US/Eastern\",\n    \"language\": \"en\",\n    \"pictureLoaded\": \"\",\n    \"notification_channels\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "157f23ad-dff1-46be-b489-0bae0944fd84",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Receive all users info\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].gender).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].gender).to.be.oneOf(['male','female']); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f07ab3db-d511-4381-83c9-bf2b5ae413f5",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive user info recently created with next id - \"+pm.collectionVariables.get(\"user_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.gender).to.be.a('string');",
+									"    pm.expect(responseJson.data.gender).to.be.oneOf(['male','female']); ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}/cars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ebdeb602-ecdc-4a52-8754-42b980480ada",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive list of car for user with id - \"+pm.collectionVariables.get(\"user_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.meta.pagination).to.have.any.keys('total');",
+									"    pm.expect(responseJson.meta.pagination).to.have.property('count');",
+									"    pm.expect(responseJson.meta.pagination).to.be.a('object');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}/cars",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update /users/{user_id?}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c3adc69-67ad-4b78-8537-fdf6a925c7af",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Update user with next id - \"+pm.collectionVariables.get(\"user_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.gender).to.be.a('string');",
+									"    pm.expect(responseJson.data.gender).to.be.oneOf(['male','female']); ",
+									"    pm.expect(responseJson.data.name).to.eql('Ozzy Osbourne');",
+									"    pm.expect(responseJson.data.company).to.eql('Driveroo_Test_Env');",
+									"    pm.expect(responseJson.data.role).to.eql('dispatcher');",
+									"    pm.expect(responseJson.data.currency.currency).to.eql('USD'); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"password\":\"\",\"id\":{{user_id}},\"name\":\"Ozzy Osbourne\",\"first_name\":\"Ozzy\",\"last_name\":\"Osbourne\",\"gender\":\"male\",\"login\":\"1111\",\"email\":\"sergeyk+004@driveroo.com\",\"phone\":\"+17077190997\",\"picture\":\"https://sandbox.driveroo.com/user_default.png\",\"language\":\"en\",\"zip\":\"89104\",\"role_updatable\":true,\"company\":\"Driveroo_Test_Env\",\"timezone\":\"US/Eastern\",\"activeCarHolds\":[],\"groups\":[{\"group_id\":241,\"group_name\":\"Team #2\",\"role_id\":248,\"role\":\"driver\"},{\"group_id\":240,\"group_name\":\"Team #1\",\"role_id\":248,\"role\":\"driver\"}],\"role\":\"dispatcher\",\"currency\":{\"currency\":\"USD\",\"name\":\"US Dollar\",\"symbol\":\"$\",\"is_symbol_first\":true},\"tab\":\"global\",\"notification_channels\":0,\"pictureLoaded\":\"\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}/resetPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c1b53fc2-2f61-4c3e-94b7-473c08e678fb",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Reset Password for user with next id - \"+pm.collectionVariables.get(\"user_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('success');",
+									"    pm.expect(responseJson).to.have.property('success');",
+									"    pm.expect(responseJson.success).to.eql(true); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"123456\",\n    \"confirm_password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}/resetPassword",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "07d1efee-ceb6-4bc5-96b9-ef74f2c4218e",
+								"exec": [
+									"// pm.test(\"Status code is 204\", function () {",
+									"//     pm.response.to.have.status(204);",
+									"// });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/2770/delete",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"2770",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users/{user_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db050ff0-3f15-4084-8245-bd6c5e4a66d5",
+								"exec": [
+									"pm.test(\"Dellet user with next id - \"+pm.collectionVariables.get(\"user_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/{{user_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JS test /userApi/fleets/users/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7892d628-fac4-4e6a-96d5-eb3d2f28f173",
+								"exec": [
+									"// Get response",
+									"var jsonData = [{",
+									"    \"pregnancy\": \"1\",",
+									"    \"id\": \"1-116992830\",",
+									"    \"name\": \"British Pregnancy Advisory Service (BPAS)\",",
+									"    \"numberOfLocations\": 78",
+									"    },",
+									"    {",
+									"    \"id\": \"1-1560082724\",",
+									"    \"name\": \"PAMS Pregnancy Ultrasound Centre (PAMS 3D & 4D Baby Imaging)\",",
+									"    \"numberOfLocations\": 1",
+									"    },",
+									"    {",
+									"    \"id\": \"1-2458518720\",",
+									"    \"name\": \" Pregnancy Ultrasound Ltd (Babyface4d)\",",
+									"    \"numberOfLocations\": 1",
+									"    }];",
+									"",
+									"",
+									"var resultCount = jsonData.length;",
+									"",
+									"// Test arrays",
+									"var hasPregnancy = [];",
+									"var doesntHavePregnancy = [];",
+									"",
+									"// Loop through and set arrays with matching data",
+									"for (i = 0; i < resultCount; i++) {",
+									"  var id = jsonData[i].id;",
+									"  var modelString = jsonData[i].name.toLowerCase();",
+									"  if (modelString.includes(\"pregnancy\")) {",
+									"    hasPregnancy.push({",
+									"      \"id\": id,",
+									"      \"hasPregnancy\": modelString.has(\"pregnancy\")",
+									"    });",
+									"  } else {",
+									"    doesntHavePregnancy.push({",
+									"      \"id\": id",
+									"    });",
+									"  }",
+									"}",
+									"",
+									"// Check that each object in response contained keyword and length matches from test",
+									"pm.test(\"Expect response to contain pregnancy in each object\", function() {",
+									"  console.log(hasPregnancy);",
+									"  console.log(doesntHavePregnancy);",
+									"  pm.expect(hasPregnancy.length).to.equal(resultCount);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98a29e3d-7233-4145-b720-5b82461c733e",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.globals.set(\"role_id\", responseJson.data.id);",
+									"pm.collectionVariables.set(\"role_id\", responseJson.data.id);",
+									"pm.environment.set(\"role_id\", responseJson.data.id);",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"role_id\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"role_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"role_id\"));",
+									"",
+									"",
+									"pm.test(\"Create flet roles\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test1');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test1\",\"abilities\":[1,2,5,9,17,26,31,34,36,41,56]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8b80c3f-188e-4c25-a4b8-e4c4254b28e8",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Receive all flet roles\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].name).to.be.a('string');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles/{role_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df9f63be-7e4d-4b15-be26-bd0ffa3be80f",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Receive info of flet roles with id - \"+pm.collectionVariables.get(\"role_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test1');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/{{role_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets /roles/{role_id?}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bca6795b-529b-4729-a41d-f997fbf3a88e",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Update flet roles with id - \"+pm.collectionVariables.get(\"role_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('test2');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test2\",\"abilities\":[1,2,5,9,17,26,31,34,36,41,56]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/{{role_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								"{{role_id}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/roles/{role_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "681a17e9-cd21-4430-a3ec-f74b8104734f",
+								"exec": [
+									"pm.test(\"Dellet role with next id - \"+pm.collectionVariables.get(\"user_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/roles/{{role_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b1f210b-d152-4a5b-9cdb-ea1698b270fd",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.globals.set(\"group_id\", responseJson.data.id);",
+									"pm.collectionVariables.set(\"group_id\", responseJson.data.id);",
+									"pm.environment.set(\"group_id\", responseJson.data.id);",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"group_id\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"group_id\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"group_id\"));",
+									"",
+									"",
+									"pm.test(\"Create flet groups\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties : 'name', 'timezone','currency'\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Team #3');",
+									"    pm.expect(responseJson.data.timezone).to.eql('Pacific/Honolulu');",
+									"    pm.expect(responseJson.data.currency.currency).to.eql('USD');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Team #3\",\"timezone\":\"Pacific/Honolulu\",\"currency\":\"USD\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eda6a1e8-b261-4e05-a26d-2327f3aa66dd",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive list of all flet groups\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data[0]).to.have.property('id');",
+									"    pm.expect(responseJson.data[0].name).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].id).to.be.a('number');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id?}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30e7c5ce-82e1-4496-add5-0c67667a9268",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Update flet group with id - \"+pm.collectionVariables.get(\"group_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Team #4');",
+									"    pm.expect(responseJson.data.timezone).to.eql('Pacific/Honolulu');",
+									"    pm.expect(responseJson.data.currency.currency).to.eql('AED');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Team #4\",\"timezone\":\"Pacific/Honolulu\",\"currency\":\"AED\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{{group_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "04f2fdcc-8b86-44df-bde8-f9121d6f5596",
+								"exec": [
+									"var responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive info of flet group with id - \"+pm.collectionVariables.get(\"group_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('name');",
+									"    pm.expect(responseJson.data).to.have.property('id');",
+									"    pm.expect(responseJson.data.name).to.be.a('string');",
+									"    pm.expect(responseJson.data.name).to.eql('Team #4');   ",
+									"    pm.expect(responseJson.data.timezone).to.eql('Pacific/Honolulu');",
+									"    pm.expect(responseJson.data.currency.currency).to.eql('AED');",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{{group_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{{group_id}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f7caf6c6-481d-4945-afbd-4357b0204959",
+								"exec": [
+									"pm.test(\"Dellet group with id - \"+pm.collectionVariables.get(\"group_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{{group_id}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/cars/attach",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/cars/attach",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"cars",
+								"attach"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/cars",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/cars",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/cars",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/cars",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/users",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/groups/{group_id}/users",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/groups/{group_id}/users",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"groups",
+								"{group_id}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Select WO /fleets/work-order/{{uuid}}",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "16241bce-762a-4a48-a6e3-62688d0de560",
+								"exec": [
+									"// postman.setEnvironmentVariable (\"uuid\", \"1c846d60-f356-11ea-bc53-71d549b77651?uuid\");",
+									"// postman.setG (\"uuid\", \"1c846d60-f356-11ea-bc53-71d549b77651?uuid\");",
+									"",
+									"pm.globals.set(\"uuid\", \"0d440c50-f82c-11ea-9ba9-79990f4e24d7\");",
+									"pm.collectionVariables.set(\"uuid\", \"0d440c50-f82c-11ea-9ba9-79990f4e24d7\");",
+									"pm.environment.set(\"uuid\", \"0d440c50-f82c-11ea-9ba9-79990f4e24d7\");",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"console.log(\"1 \"+pm.globals.get(\"uuid\"));",
+									"// получить переменную из окружения",
+									"console.log(\"2 \"+pm.environment.get(\"uuid\"));",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(\"3 \"+pm.variables.get(\"uuid\"));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cdbaf7bf-8302-4d6b-85f1-32ff0a6f9581",
+								"exec": [
+									"",
+									"",
+									"// pm.test(\"Status code is 200\", function () {",
+									"//     pm.response.to.have.status(200);",
+									"// });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/work-order/{{uuid}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"work-order",
+								"{{uuid}}"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "1c846d60-f356-11ea-bc53-71d549b77651?uuid",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/work-order/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/work-order/633",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"work-order",
+								"633"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/stats?group=  ???",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3727c190-c568-40c7-a085-7092a7d5ce65",
+								"exec": [
+									"pm.test(\"Receive info about fleet cars \", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/stats?group=",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"stats"
+							],
+							"query": [
+								{
+									"key": "group",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/status/active",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "275d8594-a3bf-4937-84fc-4ea5b97e8b1a",
+								"exec": [
+									"// console.log(pm.globals.get(\"token_id\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "aa37e14a-1f93-4398-905b-6c743c3cd837",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"/*",
+									"pm.globals.set(\"car_id\", responseJson.data[0].id);",
+									"pm.collectionVariables.set(\"car_id\", responseJson.data[0].id);",
+									"pm.environment.set(\"car_id\", responseJson.data[0].id);",
+									"*/",
+									"",
+									"",
+									"var VIN = \"false\";",
+									"// console.log(responseJson.data[0].id);",
+									"// console.log(responseJson.data[0].vin);",
+									"",
+									"// console.log(\"### \"+responseJson.data.length);",
+									"console.log(\"###  \"+pm.collectionVariables.get(\"car_id\"));",
+									"",
+									"",
+									"for (i = 0; i < responseJson.data.length; i++) {",
+									"    console.log(responseJson.data[i].id);",
+									"    //if (responseJson.data[i].id==pm.globals.get(\"car_id\")){",
+									"    if (responseJson.data[i].id == pm.collectionVariables.get(\"car_id\")) {",
+									"        VIN = responseJson.data[i].vin;",
+									"",
+									"        pm.globals.set(\"VIN_id\", responseJson.data[i].vin);",
+									"        pm.collectionVariables.set(\"VIN_id\", responseJson.data[i].vin);",
+									"        pm.environment.set(\"VIN_id\", responseJson.data[i].vin);",
+									"",
+									"        console.log(pm.globals.get(\"VIN_id\"));",
+									"        console.log(pm.collectionVariables.get(\"VIN_id\"));",
+									"        console.log(pm.environment.get(\"VIN_id\"));",
+									"        //    console.log(\"#### \"+VIN);",
+									"    }",
+									"}",
+									"",
+									"// console.log(\"##### \"+VIN);",
+									"",
+									"// console.log(pm.globals.get(\"VIN_id\"));",
+									"// console.log(pm.collectionVariables.get(\"VIN_id\"));",
+									"// console.log(pm.environment.get(\"VIN_id\"));",
+									"",
+									"pm.test(\"Receive list of all active fleet cars  \", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('id');",
+									"    pm.expect(responseJson.data[0]).to.have.property('user_id');",
+									"    pm.expect(responseJson.data[0].vin).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].groups).to.be.an('array');",
+									"    pm.expect(VIN).to.equal(pm.environment.get(\"VIN_id\"));",
+									"});",
+									"",
+									"",
+									"/*",
+									"// // Get response",
+									"var jsonData = [{",
+									"    \"pregnancy\": \"1\",",
+									"    \"id\": \"1-116992830\",",
+									"    \"name\": \"British Pregnancy Advisory Service (BPAS)\",",
+									"    \"numberOfLocations\": 78",
+									"    },",
+									"    {",
+									"    \"id\": \"1-1560082724\",",
+									"    \"name\": \"PAMS Pregnancy Ultrasound Centre (PAMS 3D & 4D Baby Imaging)\",",
+									"    \"numberOfLocations\": 1",
+									"    },",
+									"    {",
+									"    \"id\": \"1-2458518720\",",
+									"    \"name\": \" Pregnancy Ultrasound Ltd (Babyface4d)\",",
+									"    \"numberOfLocations\": 1",
+									"    }];",
+									"",
+									"",
+									"var resultCount = jsonData.length;",
+									"",
+									"// Test arrays",
+									"var hasPregnancy = [];",
+									"var doesntHavePregnancy = [];",
+									"",
+									"// Loop through and set arrays with matching data",
+									"for (i = 0; i < resultCount; i++) {",
+									"  var id = jsonData[i].id;",
+									"  var modelString = jsonData[i].name.toLowerCase();",
+									"  if (modelString.includes(\"pregnancy\")) {",
+									"    hasPregnancy.push({",
+									"      \"id\": id,",
+									"      \"hasPregnancy\": modelString.has(\"pregnancy\")",
+									"    });",
+									"  } else {",
+									"    doesntHavePregnancy.push({",
+									"      \"id\": id",
+									"    });",
+									"  }",
+									"}",
+									"",
+									"// Check that each object in response contained keyword and length matches from test",
+									"pm.test(\"Expect response to contain pregnancy in each object\", function() {",
+									"  console.log(hasPregnancy);",
+									"  console.log(doesntHavePregnancy);",
+									"  pm.expect(hasPregnancy.length).to.equal(resultCount);",
+									"});",
+									"",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/status/active",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"status",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/maintenance/schedulers/list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d096160-a47f-465c-bfe4-0e59839c2a67",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive list of all planned maintenance  \", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.meta.pagination).to.have.any.keys('total');",
+									"    pm.expect(responseJson.meta.pagination).to.have.property('count');",
+									"    pm.expect(responseJson.meta.pagination.links).to.be.an('object');",
+									"    pm.expect(responseJson.success).to.equal(true);",
+									"    pm.expect(responseJson.data[0].object_id).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].object_name).to.equal('2013 Ford Transit Connect (Vehicle 3)');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/maintenance/schedulers/list?sort=&order=asc&page=1",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"maintenance",
+								"schedulers",
+								"list"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/work-order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d67e7df-dfeb-46d6-b84e-d7dcd66525da",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Receive list of all work-order  \", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('id');",
+									"    pm.expect(responseJson.data[0]).to.have.property('assign_email');",
+									"    pm.expect(responseJson.data[0].status_string).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].status_string).to.equal('New');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/work-order?sort=&order=desc&page=1&status=",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"work-order"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "status",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/work-order/639/assign",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a6591e47-6c1d-4a1c-9f57-1595038d2e1d",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Assign work-order \", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('id');",
+									"    pm.expect(responseJson.data).to.have.property('assign_name');",
+									"    pm.expect(responseJson.data.assign_email).to.be.a('string');",
+									"    pm.expect(responseJson.data.assign_email).to.equal('sergeyk+003@driveroo.com');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"assign_name\":\"Freddie  Mercury\",\"assign_email\":\"sergeyk+003@driveroo.com\",\"assign_phone\":\"+17787222125\",\"overdue_to\":\"2021-09-30\",\"user_id\":2858,\"assigned_user_id\":\"\",\"isExitUser\":\"company\",\"approve_amount\":\"\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/work-order/639/assign",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"work-order",
+								"639",
+								"assign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/{car_id}/disable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "42b4ffe4-e4a9-45fe-9e7c-59bcc88a3eba",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Check that car can't disable when work-order for this car is assigned\", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('success');",
+									"    pm.expect(responseJson).to.have.property('success');",
+									"    pm.expect(responseJson.success).to.equal(false);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/{{car_id}}/disable",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"{{car_id}}",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/work-order/639/reject",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "042aea0e-ef46-40e5-ac20-09ce7b901dcf",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Reject work-order \", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data).to.have.any.keys('id');",
+									"    pm.expect(responseJson.data).to.have.property('created_at');",
+									"    pm.expect(responseJson.data.status_string).to.equal('New');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/work-order/639/reject",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"work-order",
+								"639",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/{{car_id}}/disable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a368c75e-2daa-49e7-8a15-03816fea5f0d",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Check that car disable after reject work-order. Car with id - \"+pm.collectionVariables.get(\"car_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('success');",
+									"    pm.expect(responseJson).to.have.property('success');",
+									"    pm.expect(responseJson.success).to.equal(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/{{car_id}}/disable",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"{{car_id}}",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/users?page=1&car=14968&abilities[0]=issue-resolve&",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "car",
+									"value": "14968"
+								},
+								{
+									"key": "abilities[0]",
+									"value": "issue-resolve"
+								},
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/status/disabled",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b7579d12-6d3b-41f8-ab6b-92852f611bd9",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"var vin=\"false\";",
+									"var car=\"false\"",
+									"",
+									"for (i=0; i< responseJson.data.length; i++ ){",
+									"    if (responseJson.data[i].id==pm.collectionVariables.get(\"car_id\")){",
+									"        vin = responseJson.data[i].vin;",
+									"        car = responseJson.data[i].id;",
+									"    }",
+									"}",
+									"",
+									"pm.test(\"Receive list of all disabled fleet cars \", function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"console.log(pm.collectionVariables.get(\"car_id\") + \"|  |\" +car+\"|\");",
+									"console.log(pm.globals.get(\"car_id\"));",
+									"console.log(pm.collectionVariables.get(\"car_id\"));",
+									"console.log(pm.environment.get(\"car_id\"));",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('id');",
+									"    pm.expect(responseJson.data[0]).to.have.property('user_id');",
+									"    pm.expect(responseJson.data[0].vin).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].groups).to.be.an('array');",
+									"    pm.expect(vin).to.equal(pm.collectionVariables.get(\"VIN_id\"));",
+									" //   pm.expect(car).to.equal(pm.environment.get(\"car_id\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/status/disabled",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"status",
+								"disabled"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{sand}}/userApi/fleets/issues?severity=&status=&car={{VIN_id}}&sort=date&order=desc&page=1&group=",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe7494ad-4931-478e-acb1-b9bd8e18cd9a",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"var VIN=\"false\";",
+									"",
+									"for (i=0; i< responseJson.data.length; i++ ){",
+									"    if (responseJson.data[i].id==pm.globals.get(\"car_id\")){",
+									"        VIN = responseJson.data[i].vin;",
+									"    }",
+									"}",
+									"",
+									"pm.test(\"Receive list of issues the car with VIN  - \"+pm.collectionVariables.get(\"VIN_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.meta.pagination).to.have.any.keys('total');",
+									"    pm.expect(responseJson.meta.pagination).to.have.property('count');",
+									"    pm.expect(responseJson.meta.pagination.links).to.be.an('array');",
+									"    pm.expect(responseJson.data).to.be.an('array');",
+									"    pm.expect(VIN).to.equal('false');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/issues?severity=&status=&car={{VIN_id}}&sort=date&order=desc&page=1&group=",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"issues"
+							],
+							"query": [
+								{
+									"key": "severity",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": ""
+								},
+								{
+									"key": "car",
+									"value": "{{VIN_id}}"
+								},
+								{
+									"key": "sort",
+									"value": "date"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "group",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/{car_id}/active",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0dabb2c6-a8f8-465f-8071-6f0e00a15bab",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Activate car with id - \"+pm.collectionVariables.get(\"car_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson).to.have.any.keys('success');",
+									"    pm.expect(responseJson).to.have.property('success');",
+									"    pm.expect(responseJson.success).to.equal(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/{{car_id}}/active",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"{{car_id}}",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{sand}}/userApi/fleets/inspections?car={{VIN_id}}&sort=&order=desc&page=1&dateFrom=2020-09-18&dateTo=2020-09-25&group=",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5aef38e0-2bfd-4231-9a1c-728cf6167f6f",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.globals.set(\"requestID\", responseJson.data[0].request_id);",
+									"pm.collectionVariables.set(\"requestID\", responseJson.data[0].request_id);",
+									"pm.environment.set(\"requestID\", responseJson.data[0].request_id);",
+									"",
+									"var VIN=\"false\";",
+									"",
+									"for (i=0; i< responseJson.data.length; i++ ){",
+									"    if (responseJson.data[i].vehicle.id==pm.collectionVariables.get(\"car_id\")){",
+									"        VIN = responseJson.data[i].vehicle.vin;",
+									"    }",
+									"}",
+									"",
+									"console.log(pm.collectionVariables.get(\"car_id\")+\"  \"+VIN+\"  \"+pm.environment.get(\"VIN_id\"));",
+									"",
+									"pm.test(\"Receive list of fleets inspections for car with VIN  - \"+pm.environment.get(\"VIN_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.meta.pagination).to.have.any.keys('total');",
+									"    pm.expect(responseJson.meta.pagination).to.have.property('count');",
+									"    pm.expect(responseJson.meta.pagination.links).to.be.an('array');",
+									"    pm.expect(responseJson.data).to.be.an('array');",
+									"    pm.expect(VIN).to.equal(pm.environment.get(\"VIN_id\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/inspections?car={{VIN_id}}&sort=&order=desc&page=1&dateFrom=2019-09-18&dateTo=2021-10-25&group=",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"inspections"
+							],
+							"query": [
+								{
+									"key": "car",
+									"value": "{{VIN_id}}"
+								},
+								{
+									"key": "sort",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "dateFrom",
+									"value": "2019-09-18"
+								},
+								{
+									"key": "dateTo",
+									"value": "2021-10-25"
+								},
+								{
+									"key": "group",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fleets/cars/status/active/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c85e76b9-45d2-40cd-8098-caeeb58c1cf7",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"var vin=\"false\";",
+									"var car=\"false\";",
+									"",
+									"for (i=0; i< responseJson.data.length; i++ ){",
+									"    if (responseJson.data[i].id==pm.collectionVariables.get(\"car_id\")){",
+									"        vin = responseJson.data[i].vin;",
+									"        car = responseJson.data[i].id;",
+									"",
+									"        // pm.globals.set(\"VIN_id\", responseJson.data[i].vin);",
+									"        // pm.collectionVariables.set(\"VIN_id\", responseJson.data[i].vin);",
+									"        // pm.environment.set(\"VIN_id\", responseJson.data[i].vin);",
+									"    }",
+									"}",
+									"",
+									"pm.test(\"Check that car is activated with id - \"+ pm.collectionVariables.get(\"car_id\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.data[0]).to.have.any.keys('id');",
+									"    pm.expect(responseJson.data[0]).to.have.property('user_id');",
+									"    pm.expect(responseJson.data[0].vin).to.be.a('string');",
+									"    pm.expect(responseJson.data[0].groups).to.be.an('array');",
+									"    pm.expect(vin).to.equal(pm.collectionVariables.get(\"VIN_id\"));",
+									" //   pm.expect(car).to.equal(pm.collectionVariables.get(\"car_id\"));",
+									"});",
+									"",
+									"    console.log(\"Global veriables = \"+pm.collectionVariables.get(\"VIN_id\"));",
+									"    console.log(\"Global veriables = \"+pm.collectionVariables.get(\"car_id\"));",
+									"    console.log(\"Test veriables = \"+vin);",
+									"    console.log(\"Test veriables = \"+car);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/status/active",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"status",
+								"active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/report/{{API_keys}}/{{requestID}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "540e017b-7b75-4af3-bebe-bf865ba4411e",
+								"exec": [
+									"let responseJson = pm.response.json();",
+									"",
+									"pm.test(\"Check that user can resive API report by id - \" + pm.collectionVariables.get(\"requestID\"), function () {",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"The response is JSON and type 'object'\", () => {",
+									"    pm.response.to.be.json;",
+									"    pm.expect(responseJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"The response has all properties\", () => {",
+									"    pm.expect(responseJson.client).to.have.any.keys('token');",
+									"    pm.expect(responseJson.client).to.have.property('vin');",
+									"    pm.expect(responseJson.client.year).to.be.a('number');",
+									"    pm.expect(responseJson.client.make).to.be.an('string');",
+									"  //  pm.expect(vin).to.equal(pm.collectionVariables.get(\"VIN_id\"));",
+									"  //  pm.expect(car).to.equal(pm.collectionVariables.get(\"car_id\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/api/report/{{API_keys}}/{{requestID}}",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"{{API_keys}}",
+								"{{requestID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test analitics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bde576d5-2f02-4533-8f0e-c242f1251e2d",
+								"exec": [
+									"console.log(pm.collectionVariables.get(\"car_id\")+\"/userApi/fleets/cars/status/isabled\");",
+									"postman.setNextRequest(pm.collectionVariables.get(\"sand\")+\"/userApi/fleets/cars/status/isabled\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_id}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sand}}/userApi/fleets/cars/status/active",
+							"host": [
+								"{{sand}}"
+							],
+							"path": [
+								"userApi",
+								"fleets",
+								"cars",
+								"status",
+								"active"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token_id}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "99ae85bf-f083-4b8a-a37b-f8e3e0e817e3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "244d9e08-4728-4419-bd12-5af65bb85524",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token_id}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c454be72-c24c-4321-9016-faf52c6ced47",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8aad600f-3689-4c01-8810-1ea0aa629cc2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "7b7e53c8-88b5-48d0-b59e-7f36e0affea4",
+			"key": "token_id",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGFzcyI6InVzZXIiLCJzdWIiOjI4NTMsImlzcyI6Imh0dHBzOi8vc2FuZGJveC5kcml2ZXJvby5jb20vdXNlckFwaS9mbGVldHMvbG9naW4iLCJpYXQiOjE2MDE5NzgzMzYsImV4cCI6MjU0ODA2MTkzNiwibmJmIjoxNjAxOTc4MzM2LCJqdGkiOiI5N3ZOTmRvSlhMYmhyNkt5In0.RHFeEaikRba-bVlGOSPD_TqA2zpKcY_0CBm9KXOrihU"
+		},
+		{
+			"id": "b6c1c687-34d9-471b-bc59-2da69abb0f48",
+			"key": "user_id",
+			"value": 2998
+		},
+		{
+			"id": "6a4f8e45-020e-4043-8152-f8c286ab5332",
+			"key": "group_id",
+			"value": 372
+		},
+		{
+			"id": "fd9359fd-7020-45e8-860b-3be5eb108529",
+			"key": "role_id",
+			"value": 379
+		},
+		{
+			"id": "f3380fcf-7723-4aed-8b91-058ead3776ba",
+			"key": "uuid",
+			"value": "0d440c50-f82c-11ea-9ba9-79990f4e24d7"
+		},
+		{
+			"id": "a60fe212-3919-4f0e-b200-a5f25acdbf97",
+			"key": "sand",
+			"value": "https://sandbox.driveroo.com"
+		},
+		{
+			"id": "2ed619df-bebd-449e-be21-a1f616e8aef9",
+			"key": "prod",
+			"value": "https://www.driveroo.com"
+		},
+		{
+			"id": "2d1c42b6-99ef-492f-aa32-3a07c7039d4e",
+			"key": "car_id",
+			"value": "14968"
+		},
+		{
+			"id": "3d8121da-e760-4bf1-8152-f36b62abf64c",
+			"key": "VIN_id",
+			"value": "NM0LS6BN4DT175842"
+		},
+		{
+			"id": "d2772a18-7a3e-41ae-a9b3-2f0f84e9ef6e",
+			"key": "API_keys",
+			"value": "024e5916-d002-47e8-83f9-15ba0860c583"
+		},
+		{
+			"id": "055fca8c-37c0-4b08-affd-a2a7fa7689ed",
+			"key": "requestID",
+			"value": "5335752"
+		},
+		{
+			"id": "5e7ac356-45e6-4289-95e8-2d99b0b04cfc",
+			"key": "cookies-token",
+			"value": "laravel_session=E5LgjEN3fXdVtAKOUD8NrRFAt3WjpsPA2eTKk3fh"
+		},
+		{
+			"id": "59914ee1-640c-4e02-ba60-65ff5e632e6a",
+			"key": "clockwork_id",
+			"value": "3540736"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
